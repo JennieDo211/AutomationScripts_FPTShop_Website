@@ -12,30 +12,43 @@ public class addToCart extends BaseTest {
     HomePage homePage;
     SearchResultPage searchResultPage;
     ProductDetailPage productDetailPage;
-    @BeforeMethod
-    public void testSelectCategory ()
-    {
-        homePage = new HomePage(driver);
-        homePage.selectCollection();
-    }
 
-    @Test
-    public void testNavigationAfterCategorySelected ()
-    {
-        Assert.assertTrue(homePage.isSelectedCategory());
-    }
+    //Cách 1: Cách này giúp có thể chạy độc lập từng test -> nhưng sẽ bị lặp lại khi chạy test từ đầu đến cuối.
+//    @BeforeMethod
+//    public void testSelectCategory ()
+//    {
+//        homePage = new HomePage(driver);
+//        searchResultPage = homePage.selectCollectionSuccess();
+//        Assert.assertTrue(searchResultPage.isDisplayed());
+//    }
+//
+//
+//    @Test
+//    public void testSelectProduct ()
+//    {
+//        productDetailPage = searchResultPage.selectProductSuccess();
+//        Assert.assertTrue(productDetailPage.isDisplayed());
+//    }
+//
+//
+//    @Test(dependsOnMethods = {"testSelectProduct"})
+//    public void testAddToCart ()
+//    {
+//        productDetailPage = searchResultPage.selectProductSuccess();
+//        productDetailPage.addToCart();
+//        Assert.assertTrue(productDetailPage.isAddToCart());
+//    }
 
-    @Test
-    public void testSelectProduct ()
-    {
-        searchResultPage = new SearchResultPage(driver);
-        Assert.assertTrue(searchResultPage.isProductSelected());
-    }
-
+    //Cách 2: Cách này giúp chạy toàn bộ E2E process mà k bị lặp lại -> Tuy nhiên k thể chạy từng test độc lập
     @Test
     public void testAddToCart ()
     {
-        productDetailPage = new ProductDetailPage(driver);
+        homePage = new HomePage(driver);
+        searchResultPage = homePage.selectCollectionSuccess();
+        Assert.assertTrue(searchResultPage.isDisplayed());
+        productDetailPage = searchResultPage.selectProductSuccess();
+        Assert.assertTrue(productDetailPage.isDisplayed());
+        productDetailPage.addToCart();
         Assert.assertTrue(productDetailPage.isAddToCart());
     }
 
