@@ -1,12 +1,10 @@
 package Pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -22,6 +20,8 @@ public class ProductDetailPage {
     }
 
     // Find Elements
+    @FindBy (xpath = "//h1[contains(@class, 'text-textOnWhitePrimary b1-semibold pc:l4-semibold')]")
+    WebElement productTitle;
     @FindBy (xpath = "//button[contains(@class,'Button_root__LQsbl Button_btnLarge__N4wc5 Button_redSecondary___XGMX Button_btnSquare___qM_O basis-14')]")
     WebElement addtocartButton;
     @FindBy (xpath = "//a[@href='/gio-hang']//span[@data-cart-count='1']")
@@ -42,17 +42,22 @@ public class ProductDetailPage {
     }
 
     // Add to Cart
-    public void addToCart() {
+    public ViewCartPage addToCart() {
         try {
             Actions addtocart = new Actions(driver);
             addtocart.scrollToElement(addtocartButton).perform();
             Thread.sleep(3000);
             addtocart.moveToElement(addtocartButton).click().perform();
             Thread.sleep(5000);
-            System.out.println("Thanh Cong");
+            addtocart.moveToElement(countInCart).perform();
+            Thread.sleep(3000);
+            addtocart.moveToElement(countInCart).click().perform();
+            Thread.sleep(5000);
+            return new ViewCartPage(driver);
         } catch (Exception e) {
             System.out.println("That bai 3" + e.getMessage());
         }
+        return null;
     }
 
     public boolean isAddToCart ()
@@ -66,6 +71,12 @@ public class ProductDetailPage {
             return false;
         }
 
+    }
+
+
+    // Prepare to compare Title with ViewCartPage
+    public String getProductTitle() {
+        return productTitle.getText().trim();
     }
 }
 
