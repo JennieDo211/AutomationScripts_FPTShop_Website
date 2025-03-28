@@ -9,7 +9,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-public class addToCart extends BaseTest {
+public class addToCart extends BaseTest
+{
     HomePage homePage;
     SearchResultPage searchResultPage;
     ProductDetailPage productDetailPage;
@@ -43,7 +44,7 @@ public class addToCart extends BaseTest {
 
     //Cách 2: Cách này giúp chạy toàn bộ E2E process mà k bị lặp lại -> Tuy nhiên k thể chạy từng test độc lập
     @Test
-    public void testAddToCart ()
+    public void setUpCart ()
     {
         homePage = new HomePage(driver);
         searchResultPage = homePage.selectCollectionSuccess();
@@ -60,7 +61,6 @@ public class addToCart extends BaseTest {
         Assert.assertTrue(productTitleInCart.contains(productTitleOnDetailPage), "Product title mismatch between detail page and cart!");
         System.out.println("Product Title Consistency");
         Assert.assertTrue(viewCartPage.isPriceCorrectly());
-
     }
 
 

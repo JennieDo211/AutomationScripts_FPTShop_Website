@@ -20,7 +20,6 @@ public class HomePage {
         PageFactory.initElements(driver,this);
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
-
     //Find Elements
     @FindBy(xpath = "//div[contains(@class,'Category_navigation__vm3vC')]")
     WebElement collectionField;

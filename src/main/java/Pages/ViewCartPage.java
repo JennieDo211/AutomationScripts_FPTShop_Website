@@ -2,6 +2,7 @@ package Pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -19,6 +20,8 @@ public class ViewCartPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
+
+    //** 1. Add To Cart Part
     // Finds Elements
     @FindBy (xpath = "//div[contains(@class,'gap-y-4 bg-bgWhiteDefault pc:rounded-[12px]')]//span[@title='MacBook Pro 14 M4 Pro 2024 12CPU/16GPU/24GB/512GB Đen MX2H3SA/A']")
     WebElement productTitleinCart;
@@ -101,6 +104,65 @@ public class ViewCartPage {
             return isPriceCorrectWithPromo;
         }
     }
+
+    //** 2. Remove from Cart Part
+    // Find Elements
+    @FindBy (xpath = "//div[contains(@class,'mb:hidden pc:flex pc:items-center')]//*[name()='svg' and contains(@class,'cursor-pointer')]")
+    WebElement trashIcon;
+    @FindBy (xpath = "(//div[contains(@class,'Popup_container__S6aww Popup_smallSize___415m')])[2]//button//span[text()='Xóa']")
+    WebElement deleteConfirmButton;
+    @FindBy (xpath = "//p[text() = 'Chưa có sản phẩm nào trong giỏ hàng']")
+    WebElement emptyCartMessage;
+    @FindBy (xpath = "//a[text() = 'Mua hàng']")
+    WebElement BacktoShopButton;
+
+    // Delete from Cart Action
+    public void deleteFromCart ()
+    {
+        try
+        {
+            Actions delete = new Actions(driver);
+            delete.moveToElement(trashIcon).click().perform();
+            Thread.sleep(3000);
+            delete.moveToElement(deleteConfirmButton).click().perform();
+            Thread.sleep(3000);
+        } catch (Exception e)
+        {
+            System.out.println("That bai 4" + e.getMessage());
+        }
+    }
+
+    // Check the EmptyCart Message
+    public boolean isEmptyMessageDisplayed ()
+    {
+        if (emptyCartMessage.isDisplayed())
+        {
+            System.out.println("Empty message is correct");
+            return true;
+        } else
+        {
+            System.out.println("Missing Message");
+            return false;
+        }
+    }
+
+    // Navigate Back To Shop Action
+    public void navigateBackToShop ()
+    {
+        try
+        {
+            Actions backToShop = new Actions(driver);
+            backToShop.moveToElement(BacktoShopButton).click().perform();
+            Thread.sleep(3000);
+        } catch (Exception e)
+        {
+            System.out.println("That bai 5" + e.getMessage());
+        }
+    }
+
+
+
+
 
 
 

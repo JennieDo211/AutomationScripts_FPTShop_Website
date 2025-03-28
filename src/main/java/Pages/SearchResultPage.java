@@ -22,7 +22,7 @@ public class SearchResultPage {
     }
 
     // Find Elements
-    @FindBy(xpath = "(//a[@href='/may-tinh-xach-tay/macbook-pro-m4-pro-14-2024-12cpu-16gpu-24gb-512gb'])[1]")
+    @FindBy(xpath = "//div[contains(@class, 'ProductCard_cardInfo__r8zG4')]//a[@title='MacBook Pro 14 M4 Pro 2024 12CPU/16GPU/24GB/512GB']")
     WebElement product;
 
     // Navigation to SearchResultPage after select Category

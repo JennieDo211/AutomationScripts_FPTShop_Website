@@ -3,15 +3,14 @@ package Utils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.*;
 
 import java.time.Duration;
 
 public class BaseTest {
     public WebDriver driver;
-    @BeforeMethod
+    public String baseURL = "https://fptshop.com.vn/";
+    @BeforeClass
     // Setup Driver
     public void setupDriver ()
     {
@@ -19,10 +18,10 @@ public class BaseTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.get("https://fptshop.com.vn/");
+        driver.get(baseURL);
     }
 
-    @AfterMethod
+    @AfterClass
     // Close Driver
     public void closeDriver ()
     {
